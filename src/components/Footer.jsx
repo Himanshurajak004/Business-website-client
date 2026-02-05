@@ -12,7 +12,7 @@ export default function Footer() {
           
           {/* Brand */}
           <div>
-            <h3 className="text-3xl font-bold">Kandy</h3>
+            <h3 className="text-2xl font-bold">Wearewebsitedesginer</h3>
             <p className="mt-4 text-sm text-white/80">
               Boutique full-stack growth partner for eCom brands
               looking to scale to 8–9 figures.
@@ -47,9 +47,14 @@ export default function Footer() {
             <p className="mb-4 text-sm text-white/80">
               Book a 30-minute discovery call with our team.
             </p>
-            <button className="rounded-lg bg-white px-6 py-3 font-semibold text-black transition hover:scale-105">
-              Book Discovery Call →
-            </button>
+            <a
+  href="https://calendly.com/wearewebsitedesigners/30min"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block rounded-lg bg-white px-6 py-3 font-semibold text-black transition hover:scale-105 hover:bg-white/90"
+>
+  Book Discovery Call →
+</a>
           </div>
         </div>
 
@@ -58,8 +63,8 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-white/70 md:flex-row">
-          <p>© {new Date().getFullYear()} Kandy. All rights reserved.</p>
-          <p>Demo created by Himanshu</p>
+          <p>© {new Date().getFullYear()} Wearewebsitedesigner. All rights reserved.</p>
+          <p></p>
         </div>
       </div>
     </footer>

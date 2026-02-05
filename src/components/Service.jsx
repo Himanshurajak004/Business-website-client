@@ -1,4 +1,17 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+
+
 export default function Services() {
+  const sectionRef = useRef(null);
+  const cardsRef = useRef([]);
+
   const services = [
     {
       title: "MEDIA BUYING",
@@ -20,13 +33,41 @@ export default function Services() {
     },
   ];
 
+  useEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    tl.fromTo(
+      sectionRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.4 }
+    ).fromTo(
+      cardsRef.current,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.2,
+      },
+      "-=0.1"
+    );
+  }, []);
+
   return (
-    <section className="relative bg-black py-24">
+    <section ref={sectionRef} className="relative bg-black py-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((s, i) => (
             <div
               key={i}
+              ref={(el) => (cardsRef.current[i] = el)}
               className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[#ef4444]/40 hover:shadow-[0_0_40px_rgba(239,68,68,0.15)]"
             >
               {/* Glow */}

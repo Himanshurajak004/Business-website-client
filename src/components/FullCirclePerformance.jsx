@@ -1,105 +1,131 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const items = [
   {
     title: "Strategy, Handled",
-    desc: "Your dedicated CMO who's driven by problem solving while connecting the dots between departments.",
-    side: "right",
-    glow: "bg-emerald-400/30",
+    desc: "Your dedicated CMO, focused on problem-solving while connecting the dots between teams.",
     img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
   },
   {
     title: "Media Buying, Optimized",
-    desc: "A numbers game based on creatives. Seamless processes for communication between creatives and ad buyers.",
-    side: "left",
-    glow: "bg-blue-400/30",
+    desc: "A numbers-driven approach powered by high-performing creatives and clean execution.",
     img: "https://images.unsplash.com/photo-1556155092-8707de31f9c4",
   },
   {
     title: "Creatives, Produced",
-    desc: "Forget scripting, briefing, management, approvals. We take care of everything.",
-    side: "right",
-    glow: "bg-yellow-400/30",
+    desc: "From scripting to approvals — we handle everything end-to-end so you can focus on growth.",
     img: "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa",
   },
   {
     title: "Email Marketing, Sorted",
-    desc: "Email strategy, automations, campaigns, copy & design — all focused on revenue.",
-    side: "left",
-    glow: "bg-green-400/30",
+    desc: "Revenue-focused email strategy, automations, campaigns, copy and design.",
     img: "https://images.unsplash.com/photo-1519337265831-281ec6cc8514",
   },
   {
     title: "Landing Pages, Built",
-    desc: "Mobile optimized, A/B tested landing & product pages. Done for you.",
-    side: "right",
-    glow: "bg-purple-400/30",
+    desc: "High-converting, mobile-first, A/B tested landing and product pages.",
     img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
   },
 ];
 
 export default function FullCirclePerformance() {
+  const sectionsRef = useRef([]);
+  const textWrapRef = useRef(null);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    sectionsRef.current.forEach((section, i) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+        onUpdate: (self) => {
+          if (self.progress > 0.5) {
+            setActive(i);
+          }
+        },
+      });
+    });
+
+    // smooth text motion (always tied to scroll)
+    gsap.fromTo(
+      textWrapRef.current,
+      { y: 60, opacity: 0 },
+      {
+        y: -60,
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: textWrapRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    // soft transition between texts
+    gsap.fromTo(
+      [titleRef.current, descRef.current],
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+    );
+  }, [active]);
+
   return (
-    <section className="bg-black py-32 px-6">
-      {/* Header */}
-      <div className="text-center mb-32">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
-          Full Circle Performance
-        </h2>
-        <p className="text-white/60">
-          From creatives to emails.
-        </p>
-      </div>
+    <section className="bg-black py-40 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24">
 
-      {/* Timeline */}
-      <div className="relative max-w-7xl mx-auto">
-        {/* vertical line */}
-        <div className="absolute left-1/2 top-0 h-full w-[2px] bg-white/10 -translate-x-1/2" />
+        {/* LEFT – STICKY + SMOOTH */}
+        <div className="relative">
+          <div className="sticky top-1/3">
+            <div ref={textWrapRef}>
+              <h2
+                ref={titleRef}
+                className="text-4xl md:text-5xl font-bold text-white mb-6"
+              >
+                {items[active].title}
+              </h2>
+              <p
+                ref={descRef}
+                className="text-lg text-white/70 max-w-md"
+              >
+                {items[active].desc}
+              </p>
+            </div>
+          </div>
+        </div>
 
-        <div className="space-y-40">
+        {/* RIGHT – SCROLL CONTENT */}
+        <div className="space-y-56">
           {items.map((item, i) => (
             <div
               key={i}
-              className={`relative flex items-center ${
-                item.side === "left"
-                  ? "justify-start"
-                  : "justify-end"
-              }`}
+              ref={(el) => (sectionsRef.current[i] = el)}
+              className="relative"
             >
-              {/* dot */}
-              <div className="absolute left-1/2 -translate-x-1/2 z-20">
-                <div className={`w-4 h-4 rounded-full ${item.glow}`} />
-              </div>
-
-              {/* content */}
-              <div
-                className={`w-full md:w-[45%] ${
-                  item.side === "left"
-                    ? "text-right pr-10"
-                    : "text-left pl-10"
-                }`}
-              >
-                <h3 className="text-3xl font-bold text-white mb-4">
-                  {item.title}
-                </h3>
-                <p className="text-white/70 max-w-md mb-6">
-                  {item.desc}
-                </p>
-
-                {/* image */}
-                <div className="relative rounded-xl overflow-hidden border border-white/10">
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    width={600}
-                    height={400}
-                    className="object-cover"
-                  />
-                </div>
+              <div className="rounded-2xl overflow-hidden border border-white/10">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-[380px] object-cover"
+                />
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

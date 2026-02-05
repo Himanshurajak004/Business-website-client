@@ -1,6 +1,16 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function CaseStudies() {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const cardsRef = useRef([]);
+
   const cases = [
     {
       brand: "DTC Beauty Brand",
@@ -25,26 +35,92 @@ export default function CaseStudies() {
     },
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      /* Heading */
+      gsap.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            end: "top 55%",
+            scrub: 0.8,
+          },
+        }
+      );
+
+      /* Cards */
+      cardsRef.current.forEach((card, i) => {
+        const img = card.querySelector("img");
+
+        // Card reveal
+        gsap.fromTo(
+          card,
+          {
+            opacity: 0,
+            y: 60,
+            scale: 0.96,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+              end: "top 55%",
+              scrub: 0.9,
+            },
+          }
+        );
+
+        // Image parallax (THIS is the premium feel)
+        gsap.fromTo(
+          img,
+          { y: 40, scale: 1.1 },
+          {
+            y: -30,
+            scale: 1,
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+          }
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative bg-black py-32">
+    <section ref={sectionRef} className="relative bg-black py-32">
       <div className="mx-auto max-w-7xl px-6">
         {/* Heading */}
-        <h2 className="mb-20 text-center text-4xl md:text-5xl font-bold text-white">
-          Case Studies
-        </h2>
+          <section id="case-studies" className="py-32 bg-black text-white">
+      <h2 className="text-4xl font-bold">Case Studies</h2>
+      {/* rest of your content */}
+    </section>
 
         {/* Cards */}
         <div className="grid gap-16 md:grid-cols-3">
           {cases.map((item, i) => (
             <div
               key={i}
+              ref={(el) => (cardsRef.current[i] = el)}
               className="group relative overflow-hidden rounded-3xl border border-white/10"
             >
-              {/* Background Image */}
+              {/* Image */}
               <img
                 src={item.image}
                 alt={item.brand}
-                className="h-[420px] w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="h-[420px] w-full object-cover will-change-transform"
               />
 
               {/* Overlay */}

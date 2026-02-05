@@ -12,6 +12,7 @@ import Quote2 from "../components/Quote2";
 import SuccessStories from "@/components/SuccessStories";
 import FullCirclePerformance from "@/components/FullCirclePerformance";
 import NumbersGoVroom from "@/components/NumbersGoVroom";
+
 export default function Page() {
   return (
     <>

@@ -1,4 +1,10 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stories = [
   {
@@ -24,7 +30,7 @@ const stories = [
   {
     brand: "HASHIBO",
     text: "From $10k/month to $1.3M/month in 10 months.",
-    img: "https://images.unsplash.com/photo-1761839257870-06874bda71b5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzNXx8fGVufDB8fHx8fA%3D%3D",
+    img: "https://images.unsplash.com/photo-1761839257870-06874bda71b5?w=600",
   },
   {
     brand: "TIMEPIECE",
@@ -34,12 +40,12 @@ const stories = [
   {
     brand: "Noreo",
     text: "$0 to $540k/month at 35% net profit in less than 6 months.",
-    img: "https://images.unsplash.com/photo-1761839257165-44f08ed617c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMnx8fGVufDB8fHx8fA%3D%3D",
+    img: "https://images.unsplash.com/photo-1761839257165-44f08ed617c7?w=600",
   },
   {
     brand: "Jesswein",
     text: "Helped Jesswein hit $3M/day in revenue with creatives.",
-    img: "https://plus.unsplash.com/premium_photo-1769005373138-9a4f2771a4cc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0Nnx8fGVufDB8fHx8fA%3D%3D",
+    img: "https://plus.unsplash.com/premium_photo-1769005373138-9a4f2771a4cc?w=600",
   },
   {
     brand: "Livia",
@@ -49,11 +55,68 @@ const stories = [
 ];
 
 export default function SuccessStories() {
+  const sectionRef = useRef(null);
+  const cardsRef = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // CARD STAGGER – scroll synced (up + down)
+      gsap.fromTo(
+        cardsRef.current,
+        {
+          opacity: 0,
+          y: 80,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: {
+            each: 0.12,
+            from: "start",
+          },
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            end: "top 30%",
+            scrub: 1.3, // 👈 buttery feel
+          },
+        }
+      );
+
+      // IMAGE PARALLAX (subtle luxury)
+      cardsRef.current.forEach((card) => {
+        const img = card.querySelector("img");
+        if (!img) return;
+
+        gsap.fromTo(
+          img,
+          { y: 20, scale: 1.05 },
+          {
+            y: -20,
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+          }
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="bg-black py-24 px-6">
+    <section ref={sectionRef} className="bg-black py-24 px-6">
       {/* heading */}
       <div className="text-center mb-16">
-        <h2 className="text-red-500 font-semibold text-3xl   tracking-wide mb-2">
+        <h2 className="text-red-500 font-semibold text-3xl tracking-wide mb-2">
           Success Stories
         </h2>
         <p className="text-white/60 text-sm">
@@ -66,6 +129,7 @@ export default function SuccessStories() {
         {stories.map((item, i) => (
           <div
             key={i}
+            ref={(el) => (cardsRef.current[i] = el)}
             className="group rounded-2xl bg-[#0d0d0d] overflow-hidden border border-white/5 hover:border-red-500/40 transition"
           >
             {/* image */}
@@ -73,8 +137,7 @@ export default function SuccessStories() {
               <img
                 src={item.img}
                 alt={item.brand}
-                fill
-                className="object-cover group-hover:scale-105 transition duration-500"
+                className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
               />
             </div>
 
