@@ -112,7 +112,7 @@ export default function Navbar() {
               <img
                 src="/logo while.png"
                 alt="We Are Website Designers"
-                className="h-8 object-contain"
+                className="h-9.1 sm:h-10 object-contain"
               />
             </Link>
 
