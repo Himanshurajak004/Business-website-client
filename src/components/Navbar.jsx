@@ -4,9 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X, Search, User, ShoppingBag } from "lucide-react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
   const navRef = useRef(null);
@@ -14,28 +11,57 @@ export default function Navbar() {
   const itemsRef = useRef([]);
   const [open, setOpen] = useState(false);
 
-  // Navbar scroll background animation
+  // =========================
+  // FIXED SCROLL LOGIC (NO DIRECTION BUG)
+  // =========================
   useEffect(() => {
-    gsap.fromTo(
-      navRef.current,
-      { background: "rgba(0,0,0,0)", backdropFilter: "blur(0px)" },
-      {
-        background:
-          "linear-gradient(90deg, rgba(26,14,8,0.9), rgba(140,75,35,0.95), rgba(26,14,8,0.9))",
-        backdropFilter: "blur(14px)",
-        boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.04)",
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top -80",
-          toggleActions: "play reverse play reverse",
-        },
-        duration: 0.25,
-        ease: "power2.out",
+    const nav = navRef.current;
+    if (!nav) return;
+
+    let isSolid = false; // 🔒 state lock
+
+    // INITIAL: visible + transparent
+    gsap.set(nav, {
+      opacity: 1,
+      background: "rgba(0,0,0,0)",
+      backdropFilter: "blur(0px)",
+      boxShadow: "none",
+    });
+
+    const onScroll = () => {
+      const shouldBeSolid = window.scrollY > 30;
+
+      if (shouldBeSolid && !isSolid) {
+        isSolid = true;
+        gsap.to(nav, {
+          background:
+            "linear-gradient(90deg, rgba(26,14,8,0.9), rgba(140,75,35,0.95), rgba(26,14,8,0.9))",
+          backdropFilter: "blur(14px)",
+          boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.04)",
+          duration: 0.25,
+          ease: "power2.out",
+        });
       }
-    );
+
+      if (!shouldBeSolid && isSolid) {
+        isSolid = false;
+        gsap.to(nav, {
+          background: "rgba(0,0,0,0)",
+          backdropFilter: "blur(0px)",
+          boxShadow: "none",
+          duration: 0.25,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Mobile menu animation
+  // =========================
+  // MOBILE MENU ANIMATION (UNCHANGED)
+  // =========================
   useEffect(() => {
     if (!open) return;
 
@@ -61,8 +87,11 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ===== NAVBAR ===== */}
-      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-50 w-full">
+      {/* ================= NAVBAR ================= */}
+      <nav
+        ref={navRef}
+        className="fixed top-0 left-0 right-0 z-50 w-full"
+      >
         <div className="mx-auto max-w-7xl px-4">
           <div className="relative flex h-16 items-center justify-between">
 
@@ -98,38 +127,10 @@ export default function Navbar() {
 
             {/* DESKTOP MENU */}
             <ul className="hidden md:flex gap-8 text-sm text-white/90 font-medium">
-              <li>
-                <a
-                  href="https://kandyforscale.com/collections/best-sellers"
-                  className="hover:text-white transition"
-                >
-                  Best Sellers
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://kandyforscale.com/pages/services-list"
-                  className="hover:text-white transition"
-                >
-                  Done For You
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://kandyforscale.com/pages/case-studies"
-                  className="hover:text-white transition"
-                >
-                  Case Studies
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://kandyforscale.com/pages/portfolio"
-                  className="hover:text-white transition"
-                >
-                  Creative Portfolio
-                </a>
-              </li>
+              <li><a href="https://kandyforscale.com/collections/best-sellers">Best Sellers</a></li>
+              <li><a href="https://kandyforscale.com/pages/services-list">Done For You</a></li>
+              <li><a href="https://kandyforscale.com/pages/case-studies">Case Studies</a></li>
+              <li><a href="https://kandyforscale.com/pages/portfolio">Creative Portfolio</a></li>
             </ul>
 
             {/* ICONS */}
@@ -142,14 +143,14 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ===== MOBILE MENU (NAVBAR KE NICHE) ===== */}
+      {/* ================= MOBILE MENU ================= */}
       {open && (
         <div
           ref={menuRef}
           className="
             fixed top-16 left-0 right-0 bottom-0
             z-40 md:hidden
-            bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(59,130,246,0.12),transparent_60%),linear-gradient(180deg,#050b1a,#000000)]
+            bg-[linear-gradient(180deg,#050505,#000000)]
             backdrop-blur-xl
           "
         >
@@ -160,23 +161,11 @@ export default function Navbar() {
               ["Case Studies", "https://kandyforscale.com/pages/case-studies"],
               ["Creative Portfolio", "https://kandyforscale.com/pages/portfolio"],
             ].map(([label, link], i) => (
-              <li
-                key={label}
-                ref={(el) => (itemsRef.current[i] = el)}
-              >
+              <li key={label} ref={(el) => (itemsRef.current[i] = el)}>
                 <a
                   href={link}
                   onClick={() => setOpen(false)}
-                  className="
-                    hover:text-[#ef4444]
-                    active:scale-95
-                    transition
-                    tracking-wide
-                    outline-none
-                    focus:outline-none
-                    active:outline-none
-                    select-none
-                  "
+                  className="hover:text-[#ef4444] active:scale-95 transition tracking-wide select-none"
                 >
                   {label}
                 </a>
