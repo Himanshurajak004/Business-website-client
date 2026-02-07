@@ -60,49 +60,43 @@ export default function SuccessStories() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // CARD STAGGER – scroll synced (up + down)
+      // CARD ENTRANCE (lighter & smoother)
       gsap.fromTo(
         cardsRef.current,
         {
           opacity: 0,
-          y: 80,
-          scale: 0.96,
+          y: 60,
         },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          stagger: {
-            each: 0.12,
-            from: "start",
-          },
-          ease: "none",
+          stagger: 0.1,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%",
-            end: "top 30%",
-            scrub: 1.3, // 👈 buttery feel
+            start: "top 80%",
+            end: "top 45%",
+            scrub: 0.6, // 👈 smoother, less CPU
           },
         }
       );
 
-      // IMAGE PARALLAX (subtle luxury)
+      // IMAGE MICRO PARALLAX (very light)
       cardsRef.current.forEach((card) => {
         const img = card.querySelector("img");
         if (!img) return;
 
         gsap.fromTo(
           img,
-          { y: 20, scale: 1.05 },
+          { y: 10 },
           {
-            y: -20,
-            scale: 1,
+            y: -10,
             ease: "none",
             scrollTrigger: {
               trigger: card,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.5,
+              scrub: 0.5, // 👈 reduced
             },
           }
         );
@@ -130,14 +124,24 @@ export default function SuccessStories() {
           <div
             key={i}
             ref={(el) => (cardsRef.current[i] = el)}
-            className="group rounded-2xl bg-[#0d0d0d] overflow-hidden border border-white/5 hover:border-red-500/40 transition"
+            className="
+              group
+              rounded-2xl
+              bg-[#0d0d0d]
+              overflow-hidden
+              border
+              border-white/5
+              hover:border-red-500/40
+              transition
+              will-change-transform
+            "
           >
             {/* image */}
             <div className="relative h-56 overflow-hidden">
               <img
                 src={item.img}
                 alt={item.brand}
-                className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
+                className="h-full w-full object-cover transition-transform duration-500 will-change-transform"
               />
             </div>
 

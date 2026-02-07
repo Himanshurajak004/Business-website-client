@@ -61,7 +61,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-black py-24">
+    <section ref={sectionRef} className="relative bg-black py-15">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((s, i) => (

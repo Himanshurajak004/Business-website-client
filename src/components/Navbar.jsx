@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, User, ShoppingBag } from "lucide-react";
+import { Menu, Search, User, ShoppingBag } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,12 +15,14 @@ export default function Navbar() {
     gsap.fromTo(
       navRef.current,
       {
-        backgroundColor: "rgba(0,0,0,0)",
+        background: "rgba(0,0,0,0)",
         backdropFilter: "blur(0px)",
       },
       {
-        backgroundColor: "rgba(0,0,0,0.55)",
+        background:
+          "linear-gradient(90deg, rgba(26,14,8,0.9), rgba(140,75,35,0.95), rgba(26,14,8,0.9))",
         backdropFilter: "blur(14px)",
+        boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.04)",
         scrollTrigger: {
           trigger: document.body,
           start: "top -80",
@@ -35,54 +37,78 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 z-50 w-full transition-all"
+      className="fixed top-0 left-0 right-0 z-50 w-full"
     >
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex h-16 items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="relative flex h-16 items-center justify-between">
 
-          {/* LOGO */}
-          <Link href="/" className="flex items-center gap-3">
+          {/* MOBILE MENU ICON */}
+          <button className="md:hidden text-white">
+            <Menu size={22} />
+          </button>
+
+          {/* MOBILE LOGO (CENTER) */}
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 md:hidden"
+          >
             <img
               src="/logo while.png"
-              alt=""
-              className="h-10 object-contain brightness-125 contrast-125"
-              style={{ filter: "drop-shadow(0 0 6px rgba(255,255,255,0.25))" }}
+              alt="We Are Website Designers"
+              className="h-8 object-contain"
             />
-            {/* Optional text – remove if you want image-only logo */}
-            <span className="hidden sm:block text-white font-semibold tracking-wide">
-             
-            </span>
           </Link>
 
-          {/* MENU (SCROLL BASED) */}
+          {/* DESKTOP LOGO (LEFT) */}
+          <Link href="/" className="hidden md:flex items-center gap-3">
+            <img
+              src="/logo while.png"
+              alt="We Are Website Designers"
+              className="h-9 object-contain"
+            />
+          </Link>
+
+          {/* DESKTOP MENU — ORIGINAL LINKS */}
           <ul className="hidden md:flex gap-8 text-sm text-white/90 font-medium">
             <li>
-              <a href="https://kandyforscale.com/collections/best-sellers" className="hover:text-white transition">
+              <a
+                href="https://kandyforscale.com/collections/best-sellers"
+                className="hover:text-white transition"
+              >
                 Best Sellers
               </a>
             </li>
             <li>
-              <a href="https://kandyforscale.com/pages/services-list" className="hover:text-white transition">
+              <a
+                href="https://kandyforscale.com/pages/services-list"
+                className="hover:text-white transition"
+              >
                 Done For You
               </a>
             </li>
             <li>
-              <a href="https://kandyforscale.com/pages/case-studies" className="hover:text-white transition">
+              <a
+                href="https://kandyforscale.com/pages/case-studies"
+                className="hover:text-white transition"
+              >
                 Case Studies
               </a>
             </li>
             <li>
-              <a href="https://kandyforscale.com/pages/portfolio" className="hover:text-white transition">
+              <a
+                href="https://kandyforscale.com/pages/portfolio"
+                className="hover:text-white transition"
+              >
                 Creative Portfolio
               </a>
             </li>
           </ul>
 
           {/* ICONS */}
-          <div className="flex items-center gap-5 text-white/90">
-            <Search size={18} className="cursor-pointer hover:text-white transition" />
-            <User size={18} className="cursor-pointer hover:text-white transition" />
-            <ShoppingBag size={18} className="cursor-pointer hover:text-white transition" />
+          <div className="flex items-center gap-4 text-white">
+            <Search size={18} />
+            <User size={18} />
+            <ShoppingBag size={18} />
           </div>
 
         </div>

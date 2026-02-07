@@ -19,18 +19,16 @@ export default function Testimonial() {
           trigger: sectionRef.current,
           start: "top 75%",
           end: "top 25%",
-          scrub: 1.2,        // 👈 MAGIC: smooth both directions
+          scrub: 1.2,
         },
       });
 
-      // SECTION depth
       tl.fromTo(
         sectionRef.current,
         { opacity: 0, scale: 0.95 },
         { opacity: 1, scale: 1, ease: "none" }
       );
 
-      // QUOTE lines
       tl.fromTo(
         quoteRef.current.children,
         { opacity: 0, y: 40 },
@@ -43,7 +41,6 @@ export default function Testimonial() {
         "-=0.3"
       );
 
-      // AUTHOR
       tl.fromTo(
         authorRef.current,
         { opacity: 0, y: 25 },
@@ -51,7 +48,6 @@ export default function Testimonial() {
         "-=0.2"
       );
 
-      // LOGO micro motion
       tl.fromTo(
         logoRef.current,
         { scale: 0.85, rotate: -6, opacity: 0 },
@@ -66,19 +62,30 @@ export default function Testimonial() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen items-center justify-center bg-black px-6 text-center text-white"
+      className="
+        relative
+        flex
+        items-center
+        justify-center
+        bg-black
+        px-4
+        py-24
+        md:py-32
+        text-center
+        text-white
+      "
     >
       {/* background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.15),transparent_55%)]" />
 
       <div className="relative z-10 max-w-4xl">
         {/* quote icon */}
-        <div className="mb-10 text-5xl text-white/60">“</div>
+        <div className="mb-8 text-5xl text-white/60">“</div>
 
         {/* Quote */}
         <h2
           ref={quoteRef}
-          className="mb-10 text-3xl md:text-4xl font-semibold leading-tight"
+          className="mb-8 text-3xl md:text-4xl font-semibold leading-tight"
         >
           <span className="block">
             The most efficient marketing machine.
@@ -91,7 +98,7 @@ export default function Testimonial() {
         {/* Author */}
         <p
           ref={authorRef}
-          className="mb-10 text-sm tracking-wide text-white/60"
+          className="mb-8 text-sm tracking-wide text-white/60"
         >
           Ran Halbershtain — VP of Marketing at Livia
         </p>
@@ -101,8 +108,8 @@ export default function Testimonial() {
           <img
             src="https://kandyforscale.com/cdn/shop/files/image_5.png?v=1746465414&width=256"
             alt="Livia"
-            width={170}
-            height={170}
+            width={160}
+            height={160}
             className="object-contain"
           />
         </div>

@@ -15,24 +15,21 @@ export default function Testimonial() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // MASTER – smooth & short
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 75%",
-          end: "top 35%",   // 👈 SHORT RANGE = readable
-          scrub: 0.8,       // 👈 smooth both ways
+          end: "top 35%",   // short & readable
+          scrub: 0.8,
         },
       });
 
-      // glow breathe
       tl.fromTo(
         glowRef.current,
         { opacity: 0, scale: 0.9 },
         { opacity: 1, scale: 1, ease: "none" }
       );
 
-      // quote mark
       tl.fromTo(
         quoteRef.current,
         { opacity: 0, y: -20 },
@@ -40,7 +37,6 @@ export default function Testimonial() {
         "-=0.2"
       );
 
-      // main text
       tl.fromTo(
         textRef.current,
         { opacity: 0, y: 30 },
@@ -48,7 +44,6 @@ export default function Testimonial() {
         "-=0.15"
       );
 
-      // footer
       tl.fromTo(
         footerRef.current,
         { opacity: 0, y: 20 },
@@ -63,14 +58,33 @@ export default function Testimonial() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden"
+      className="
+        relative
+        bg-black
+        flex
+        items-center
+        justify-center
+        overflow-hidden
+        px-4
+        py-24
+        md:py-32
+      "
     >
       {/* green glow */}
       <div
         ref={glowRef}
-        className="absolute w-[600px] h-[300px] rounded-full
-        bg-[radial-gradient(circle,rgba(0,260,220,0.39),transparent_70%)]
-        blur-[120px]"
+        className="
+          absolute
+          w-[320px]
+          h-[200px]
+          sm:w-[420px]
+          sm:h-[240px]
+          md:w-[600px]
+          md:h-[300px]
+          rounded-full
+          bg-[radial-gradient(circle,rgba(0,260,220,0.39),transparent_70%)]
+          blur-[120px]
+        "
       />
 
       {/* content */}
@@ -78,7 +92,7 @@ export default function Testimonial() {
         {/* quote */}
         <div
           ref={quoteRef}
-          className="text-7xl mb-6 font-serif text-white/80"
+          className="text-6xl md:text-7xl mb-6 font-serif text-white/80"
         >
           “
         </div>
@@ -86,7 +100,7 @@ export default function Testimonial() {
         {/* main text */}
         <p
           ref={textRef}
-          className="text-2xl md:text-3xl font-semibold leading-snug mb-12"
+          className="text-xl md:text-3xl font-semibold leading-snug mb-10"
         >
           Went from zero to almost 8 figures with these guys in
           <br className="hidden md:block" />
@@ -95,7 +109,7 @@ export default function Testimonial() {
 
         {/* footer */}
         <div ref={footerRef}>
-          <p className="text-sm text-white/60 mb-2">
+          <p className="text-sm text-white/60 mb-1">
             Owner of PrimalHerbs
           </p>
           <p className="text-lg font-bold tracking-wide">

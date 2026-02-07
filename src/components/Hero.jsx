@@ -13,24 +13,22 @@ export default function Hero() {
   useEffect(() => {
     gsap
       .timeline({ defaults: { ease: "power3.out" } })
-      .fromTo(badgeRef.current, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 })
-      .fromTo(headingRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, "-=0.2")
+      .fromTo(badgeRef.current, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 })
+      .fromTo(headingRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.2")
       .fromTo(paraRef.current, { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.3")
       .fromTo(buttonRef.current, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, "-=0.3")
       .fromTo(imageWrapRef.current, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9 }, "-=0.2");
   }, []);
 
   return (
-    <section className="relative min-h-[130vh] overflow-hidden bg-black">
+    <section className="relative overflow-hidden bg-black">
 
-      {/* BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#5b1d0c] via-black to-[#0b1a3a]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-25" />
+      {/* 🌌 SINGLE CONTINUOUS BACKGROUND */}
+      <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(37,99,235,0.35),transparent_60%),linear-gradient(180deg,#050505,#000000)]" />
 
-      {/* TOP CONTENT */}
-      <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-5xl flex-col items-center justify-center px-6 text-center text-white">
+      {/* ===== TEXT AREA ===== */}
+      <div className="relative z-10 mx-auto max-w-5xl min-h-[80vh] flex flex-col items-center justify-center px-5 text-center text-white">
 
-        {/* BADGE */}
         <div
           ref={badgeRef}
           className="mb-6 rounded-full border border-white/15 bg-black/40 px-4 py-1 text-sm backdrop-blur"
@@ -39,49 +37,51 @@ export default function Hero() {
           <span className="text-white/80">Proven By Our Own Brands</span>
         </div>
 
-        {/* HEADING */}
         <h1
           ref={headingRef}
-          className="text-[36px] font-semibold leading-[1.22] tracking-tight md:text-[54px]"
+          className="text-[30px] sm:text-[36px] md:text-[54px] font-semibold leading-[1.25]"
         >
           Boutique Full Stack Growth Partner for eCom DTC Brands Looking to{" "}
           <span className="text-[#ef4444]">Scale to 8–9 Figures.</span>
         </h1>
 
-        {/* SUBTEXT */}
         <p
           ref={paraRef}
-          className="mt-5 max-w-2xl text-[15px] text-white/70 md:text-base"
+          className="mt-4 max-w-2xl text-[14px] sm:text-[15px] md:text-base text-white/70"
         >
           Paid ads, killer creatives, email, landings and strategy.
           E-commerce growth, wrapped in beautiful processes.
         </p>
 
-        {/* CTA */}
         <a
           ref={buttonRef}
-          href="https://calendly.com/wearewebsitedesigners/30min"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 rounded-xl bg-[#ef4444] px-10 py-4 text-sm font-semibold shadow-[0_0_24px_rgba(239,68,68,0.45)] transition hover:scale-105 hover:bg-[#dc2626]"
+          href="#"
+          className="mt-8 rounded-xl bg-[#ef4444] px-10 py-4 text-sm font-semibold shadow-[0_0_28px_rgba(239,68,68,0.45)] transition hover:scale-105"
         >
           Book Your Discovery Call →
         </a>
       </div>
 
-      {/* IMAGE STRIP (BOTTOM) */}
+      {/* 🔻 SMOOTH FADE (TEXT → IMAGE) */}
+      <div className="pointer-events-none absolute bottom-[32%] left-0 h-[220px] w-full bg-gradient-to-b from-black to-transparent z-20" />
+
+      {/* ===== IMAGE AREA ===== */}
       <div
         ref={imageWrapRef}
-        className="relative z-10 flex justify-center"
+        className="relative z-10 flex justify-center pb-28 overflow-hidden"
       >
-        {/* GLOW */}
-        <div className="absolute -top-10 h-[300px] w-[900px] rounded-full bg-gradient-to-r from-[#1e3a8a]/40 via-[#7c2d12]/30 to-[#1e3a8a]/40 blur-[140px]" />
+        
+       
 
-        {/* IMAGE */}
         <img
-          src="/hero.png"   // 👈 apni image
+          src="/hero.png"
           alt="Brand Proof"
-          className="w-[1400px] max-w-[95%] -rotate-2 rounded-2xl drop-shadow-[0_50px_90px_rgba(0,0,0,0.7)]"
+          className="relative z-10 w-[115%] 
+          sm:w-[120%] md:w-full max-w-none
+           md:max-w-[1900px] rounded-2xl 
+           drop-shadow-[0_70px_120px_rgba(0,0,0,0.82)]
+            md:-rotate-2"
+            
         />
       </div>
     </section>
