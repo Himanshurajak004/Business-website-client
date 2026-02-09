@@ -23,25 +23,30 @@ export default function Hero() {
   return (
     <>
       {/* ================= HERO TEXT ================= */}
-      <section className="relative bg-black overflow-hidden">
-        {/* BACKGROUND */}
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(59,130,246,0.25),transparent_60%),linear-gradient(180deg,#050b1a,#000000)]" />
-
+      <section className="relative overflow-hidden bg-black">
+        {/* BACKGROUND GRADIENT */}
         <div
-          className="
-            relative z-10 mx-auto max-w-5xl
-            pt-32 pb-20
-            px-6 text-center text-white
-          "
-        >
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(900px 600px at left center, rgba(239,68,68,0.4), transparent 55%),
+              radial-gradient(900px 600px at right center, rgba(59,130,246,0.4), transparent 55%),
+              linear-gradient(180deg, #020617, #000000)
+            `,
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-5xl pt-32 pb-20 px-6 text-center text-white">
+          {/* BADGE */}
           <div
             ref={badgeRef}
-            className="mb-6 inline-flex rounded-full border border-white/15 bg-black/40 px-5 py-1.5 text-sm backdrop-blur"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-5 py-1.5 text-sm backdrop-blur"
           >
             <span className="text-green-400">✔</span>
-            <span className="ml-2 text-white/85">Proven By Our Own Brands</span>
+            <span className="text-white/85">Proven By Our Own Brands</span>
           </div>
 
+          {/* HEADING */}
           <h1
             ref={headingRef}
             className="text-[34px] sm:text-[40px] md:text-[54px] font-semibold leading-[1.15]"
@@ -50,6 +55,7 @@ export default function Hero() {
             <span className="text-[#ef4444]">Scale to 8–9 Figures.</span>
           </h1>
 
+          {/* PARA */}
           <p
             ref={paraRef}
             className="mt-5 max-w-2xl mx-auto text-[15px] sm:text-[16px] text-white/75"
@@ -58,10 +64,12 @@ export default function Hero() {
             E-commerce growth, wrapped in beautiful processes.
           </p>
 
+          {/* CTA */}
           <a
             ref={buttonRef}
-            href="#"
-            className="inline-block mt-9 rounded-xl bg-[#ef4444] px-12 py-4 text-sm font-semibold shadow-[0_0_32px_rgba(239,68,68,0.45)] transition active:scale-95"
+            href="Https://calendly.com/wearewebsitedesigners/30min"
+            className="inline-block mt-9 rounded-xl bg-[#ef4444] px-12 py-4 text-sm font-semibold
+                       shadow-[0_0_36px_rgba(239,68,68,0.55)] transition active:scale-95"
           >
             Book Your Discovery Call →
           </a>
@@ -69,15 +77,26 @@ export default function Hero() {
       </section>
 
       {/* ================= HERO IMAGE ================= */}
-      <section className="relative bg-black">
+      <section className="relative overflow-hidden bg-black">
+        {/* IMAGE BACK GLOW */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(700px 450px at 30% 40%, rgba(239,68,68,0.35), transparent 60%),
+              radial-gradient(700px 450px at 70% 40%, rgba(59,130,246,0.35), transparent 60%)
+            `,
+          }}
+        />
+
         <div
           ref={imageWrapRef}
-          className="relative z-10 flex justify-center px-4 pb-24 overflow-hidden"
+          className="relative z-10 flex justify-center px-4 pb-24"
         >
           <img
-            src="/hero.png"
+            src="/newhero.png"
             alt="Brand results"
-            className="w-full max-w-6xl object-contain"
+            className="w-full max-w-8xl object-contain"
           />
         </div>
       </section>

@@ -14,6 +14,9 @@ import FullCirclePerformance from "@/components/FullCirclePerformance";
 import NumbersGoVroom from "@/components/NumbersGoVroom";
 import WhyUsSection from "@/components/WhyUsSection";
 import TrustedBrands from "@/components/TrustedBrands";
+import ValuesSection from "@/components/ValuesSection";
+import OwnBrands from "@/components/OwnBrands";
+
 
 export default function Page() {
   return (
@@ -24,15 +27,20 @@ export default function Page() {
       <Service />
       <NumbersGoVroom />
       <FullCirclePerformance />
+       <Process /> 
       <Quote2 />
+
         <SuccessStories />
         <WhyUsSection />
        <CreativeTeam /> 
-       <Process />  
+       
        <Quote />  
       <Testimonials />
       <CaseStudies />
-
+      <OwnBrands />
+      <ValuesSection />
+     
+      
       <CTA />
       <Footer />
       
