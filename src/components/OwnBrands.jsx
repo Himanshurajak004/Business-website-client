@@ -57,11 +57,7 @@ export default function OwnBrands() {
             {/* CONTENT */}
             <div className="absolute bottom-0 p-8">
               {/* LOGO */}
-              <img
-                src={""}
-                alt=""
-                className="h-8 mb-4 opacity-90"
-              />
+              
 
               <p className="text-white text-lg font-semibold leading-snug">
                 {item.title}
