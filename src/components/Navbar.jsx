@@ -157,8 +157,8 @@ export default function Navbar() {
           <ul className="flex flex-col items-center justify-center h-full gap-8 text-white text-xl font-medium">
             {[
               ["Best Sellers", "/best-sellers"],
-              ["Done For You", "https://kandyforscale.com/pages/services-list"],
-              ["Case Studies", "https://kandyforscale.com/pages/case-studies"],
+              ["Done For You", "/done-for-you"],
+              ["Case Studies", "/case-studies"],
               ["Creative Portfolio", "https://kandyforscale.com/pages/portfolio"],
             ].map(([label, link], i) => (
               <li key={label} ref={(el) => (itemsRef.current[i] = el)}>
