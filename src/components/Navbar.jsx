@@ -130,7 +130,7 @@ export default function Navbar() {
               <li><a href="/best-sellers">Best Sellers</a></li>
               <li><a href="/done-for-you">Done For You</a></li>
               <li><a href="/case-studies">Case Studies</a></li>
-              <li><a href="https://kandyforscale.com/pages/portfolio">Creative Portfolio</a></li>
+              <li><a href="/creative-portfolio">Creative Portfolio</a></li>
             </ul>
 
             {/* ICONS */}
@@ -159,7 +159,7 @@ export default function Navbar() {
               ["Best Sellers", "/best-sellers"],
               ["Done For You", "/done-for-you"],
               ["Case Studies", "/case-studies"],
-              ["Creative Portfolio", "https://kandyforscale.com/pages/portfolio"],
+              ["Creative Portfolio", "/creative-portfolio"],
             ].map(([label, link], i) => (
               <li key={label} ref={(el) => (itemsRef.current[i] = el)}>
                 <a

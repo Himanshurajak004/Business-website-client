@@ -34,7 +34,7 @@ export default function CreativeTeam() {
 
         {/* HEADING */}
         <div className="text-center mb-14 md:mb-20">
-          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="mb-14 md:mb-20">
             Imagine Having A Full-Stack Creative Team.
             <br />
             <span className="text-red-500">
