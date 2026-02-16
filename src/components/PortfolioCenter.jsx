@@ -117,12 +117,10 @@ function Gallery({ title, subtitle, items, type }) {
         {/* Slider */}
         <div
           ref={sliderRef}
-          className="
-            flex gap-6 sm:gap-10
-            px-4 sm:px-16
-            pb-8 sm:pb-10
-            overflow-x-scroll
-          "
+          className="flex gap-6 overflow-x-scroll px-4 pb-8 [scrollbar-width:none] [-ms-overflow-style:none]
+           sm:gap-10 sm:px-16 sm:pb-10 [&::-webkit-scrollbar]:hidden"
+           
+          
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -164,11 +162,8 @@ function Gallery({ title, subtitle, items, type }) {
             </div>
           ))}
 
-          <style jsx>{`
-            div::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
+          
+          
         </div>
 
         {/* Arrows */}
