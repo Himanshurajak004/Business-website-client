@@ -56,10 +56,17 @@ export default function HeroSection() {
 
         <div className="mt-12 flex justify-center">
           <img
-            src="/DoneFor.png"
-            alt="Hero visual"
-            className="w-[260px] sm:w-[560px] md:w-[680px] object-contain"
-          />
+  src="/DoneFor.png"
+  alt="Hero visual"
+  className="
+    w-[280px]
+    sm:w-[580px]
+    md:w-[690px]
+    mx-auto
+    mt-6 sm:mt-10
+    object-contain
+  "
+/>
         </div>
       </div>
 
